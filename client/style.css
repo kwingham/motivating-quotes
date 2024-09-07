@@ -29,7 +29,7 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 0 2rem; /* Add padding to the body */
   background-color: #f0f0f0;
   color: #213547;
 }
@@ -45,17 +45,19 @@ form {
   flex-direction: column;
   align-items: center;
   margin-bottom: 30px;
+  width: 100%;
+  max-width: 400px; /* Restrict form to a max width */
+  padding: 1rem; /* Padding inside form */
 }
 
 input,
 textarea {
   padding: 10px;
-  margin: 5px;
+  margin: 10px 0; /* Margin between form elements */
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 1em;
   width: 100%;
-  max-width: 400px;
 }
 
 button {
@@ -91,6 +93,8 @@ li {
   padding: 15px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px; /* Constrain list items to avoid full-width on large screens */
+  width: 100%;
 }
 
 blockquote {
@@ -131,8 +135,8 @@ button.upvote-btn:disabled {
 
   form {
     width: 100%;
-    max-width: 100%;
-    padding: 0 1rem;
+    max-width: 90%; /* Ensure form doesn't touch screen edges */
+    padding: 0 1.5rem;
   }
 
   input,
@@ -150,6 +154,7 @@ button.upvote-btn:disabled {
   li {
     font-size: 0.9em;
     padding: 10px;
+    max-width: 90%; /* Ensure list items don't stretch on mobile */
   }
 
   blockquote {
@@ -164,7 +169,9 @@ button.upvote-btn:disabled {
 
   form {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
   input,
@@ -178,6 +185,7 @@ button.upvote-btn:disabled {
 
   li {
     font-size: 1em;
+    max-width: 90%;
   }
 
   blockquote {
@@ -197,6 +205,8 @@ button.upvote-btn:disabled {
   form {
     width: 100%;
     max-width: 600px;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
   input,
@@ -211,6 +221,7 @@ button.upvote-btn:disabled {
   li {
     font-size: 1.1em;
     padding: 20px;
+    max-width: 70%; /* Slight constraint for larger screens */
   }
 
   blockquote {
