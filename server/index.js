@@ -33,10 +33,18 @@ app.post("/quotes", async (req, res) => {
   }
 });
 
-// GET: Retrieve all quotes
+// GET: Retrieve all quotes with optional sorting by upvotes
 app.get("/quotes", async (req, res) => {
   try {
-    const allQuotes = await db.query("SELECT * FROM quotes");
+    // Retrieve the sort query parameter (optional, defaults to 'desc')
+    const sort = req.query.sort || "desc";
+    const order = sort === "asc" ? "ASC" : "DESC";
+
+    // Query to fetch quotes sorted by upvotes
+    const allQuotes = await db.query(
+      `SELECT * FROM quotes ORDER BY upvotes ${order}`
+    );
+
     res.json(allQuotes.rows);
   } catch (error) {
     console.error(error.message);
