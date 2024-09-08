@@ -1,24 +1,26 @@
-// Ensure the DOM is fully loaded before running any code
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("quote-form");
-  const quoteList = document.getElementById("quote-list");
-  const authorFilter = document.getElementById("author-filter");
-  const sortOrderButton = document.getElementById("sort-order");
+// Handles client-side logic for posting, fetching, sorting, and filtering quotes
+const form = document.getElementById("quote-form");
+const quoteList = document.getElementById("quote-list");
+const authorFilter = document.getElementById("author-filter");
+const sortOrderButton = document.getElementById("sort-order");
 
-  // State variables to keep track of the current sorting and filtering
-  let currentAuthorFilter = "All Authors";
-  let currentSortOrder = "Ascending";
+// State variables to keep track of the current sorting and filtering
+let currentAuthorFilter = "All Authors";
+let currentSortOrder = "Ascending";
 
-  // Fetch and display quotes when the page loads or when filters/sorting changes
-  async function fetchQuotes() {
-    let url = "https://motivating-quotes-server.onrender.com/quotes";
+// Fetch and display quotes when the page loads or when filters/sorting changes
+async function fetchQuotes() {
+  let url = "https://motivating-quotes-server.onrender.com/quotes";
 
-    // Apply author filter if not set to "All Authors"
-    if (currentAuthorFilter !== "All Authors") {
-      url += `?author=${encodeURIComponent(currentAuthorFilter)}`;
-    }
+  // Apply author filter if not set to "All Authors"
+  if (currentAuthorFilter !== "All Authors") {
+    url += `?author=${encodeURIComponent(currentAuthorFilter)}`;
+  }
 
-    const response = await fetch(url);
+  const response = await fetch(url);
+
+  if (response.ok) {
+    // Add a check for successful response
     let quotes = await response.json();
 
     // Sort quotes based on upvotes
@@ -42,37 +44,48 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
       quoteList.appendChild(li);
     });
+  } else {
+    console.error("Failed to fetch quotes", response.statusText);
   }
+}
 
-  // Submit form and post a new quote
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+// Submit form and post a new quote
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    const user_name = document.getElementById("user-name").value;
-    const quote = document.getElementById("quote").value;
-    const author = document.getElementById("author").value;
+  const user_name = document.getElementById("user-name").value;
+  const quote = document.getElementById("quote").value;
+  const author = document.getElementById("author").value;
 
-    // POST new quote to the server
-    await fetch("https://motivating-quotes-server.onrender.com/quotes", {
+  // POST new quote to the server
+  const postResponse = await fetch(
+    "https://motivating-quotes-server.onrender.com/quotes",
+    {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ user_name, quote, author }),
-    });
+    }
+  );
 
+  if (postResponse.ok) {
     // Clear form fields
     form.reset();
-
     // Fetch updated quotes
     fetchQuotes();
-  });
+  } else {
+    console.error("Failed to post quote", postResponse.statusText);
+  }
+});
 
-  // Fetch authors dynamically for the filter dropdown
-  async function fetchAuthors() {
-    const response = await fetch(
-      "https://motivating-quotes-server.onrender.com/authors"
-    );
+// Fetch authors dynamically for the filter dropdown
+async function fetchAuthors() {
+  const response = await fetch(
+    "https://motivating-quotes-server.onrender.com/authors"
+  );
+
+  if (response.ok) {
     const authors = await response.json();
 
     // Clear current options
@@ -85,37 +98,43 @@ document.addEventListener("DOMContentLoaded", function () {
       option.textContent = author;
       authorFilter.appendChild(option);
     });
+  } else {
+    console.error("Failed to fetch authors", response.statusText);
   }
+}
 
-  // Handle author filter change
-  authorFilter.addEventListener("change", (e) => {
-    currentAuthorFilter = e.target.value;
-    fetchQuotes();
-  });
+// Handle author filter change
+authorFilter.addEventListener("change", (e) => {
+  currentAuthorFilter = e.target.value;
+  fetchQuotes();
+});
 
-  // Handle sort order change
-  sortOrderButton.addEventListener("click", () => {
-    currentSortOrder =
-      currentSortOrder === "Ascending" ? "Descending" : "Ascending";
-    sortOrderButton.textContent = `Upvotes: ${currentSortOrder}`;
-    fetchQuotes();
-  });
+// Handle sort order change
+sortOrderButton.addEventListener("click", () => {
+  currentSortOrder =
+    currentSortOrder === "Ascending" ? "Descending" : "Ascending";
+  sortOrderButton.textContent = `Upvotes: ${currentSortOrder}`;
+  fetchQuotes();
+});
 
-  // Upvote a quote
-  async function upvoteQuote(quoteId) {
-    await fetch(
-      `https://motivating-quotes-server.onrender.com/quotes/${quoteId}/upvote`,
-      {
-        method: "POST",
-      }
-    );
+// Upvote a quote
+async function upvoteQuote(quoteId) {
+  const upvoteResponse = await fetch(
+    `https://motivating-quotes-server.onrender.com/quotes/${quoteId}/upvote`,
+    {
+      method: "POST",
+    }
+  );
 
+  if (upvoteResponse.ok) {
     // Refresh the quotes list after upvoting
     fetchQuotes();
+  } else {
+    console.error("Failed to upvote quote", upvoteResponse.statusText);
   }
+}
 
-  // Load authors, quotes, and set initial UI state when page loads
-  fetchAuthors();
-  fetchQuotes();
-  sortOrderButton.textContent = `Upvotes: ${currentSortOrder}`;
-});
+// Load authors, quotes, and set initial UI state when page loads
+fetchAuthors();
+fetchQuotes();
+sortOrderButton.textContent = `Upvotes: ${currentSortOrder}`;
