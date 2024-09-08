@@ -3,6 +3,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column; /* Align the content vertically */
   min-height: 100vh;
   font-family: "Segoe UI", sans-serif;
   background-color: #f0f0f0;
@@ -10,7 +11,7 @@ body {
 }
 
 .container {
-  max-width: 1000px; /* Increase the max width for better spacing */
+  max-width: 1000px;
   width: 100%;
   padding: 20px;
   text-align: center;
@@ -53,7 +54,7 @@ form button:hover {
   border-color: #646cff;
 }
 
-/* Center the filter-sort container and ensure alignment */
+/* Filter and sort section placed below the form */
 .filter-sort-container {
   display: flex;
   justify-content: center;
@@ -84,7 +85,7 @@ ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  width: 100%; /* Make the list take up the full width */
+  width: 100%;
 }
 
 li {
@@ -95,7 +96,7 @@ li {
   text-align: left;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Make each quote stretch across the container */
+  width: 100%;
 }
 
 blockquote {
