@@ -1,53 +1,51 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("quote-form");
-  const quoteList = document.getElementById("quote-list");
+// Handles client-side logic for posting and fetching quotes
+const form = document.getElementById("quote-form");
+const quoteList = document.getElementById("quote-list");
 
-  // Function to load and display quotes
-  function loadQuotes() {
-    fetch("https://motivating-quotes-server.onrender.com/quotes")
-      .then((res) => res.json())
-      .then((data) => {
-        quoteList.innerHTML = ""; // Clear the list
-        data.forEach((quote) => {
-          const li = document.createElement("li");
-          li.innerHTML = `<blockquote>"${quote.quote}" - ${quote.author}</blockquote>
-                          <p>Posted by: ${quote.user_name}</p>
-                          <p>Upvotes: ${quote.upvotes} <button data-id="${quote.id}" class="upvote-btn">Upvote</button></p>`;
-          quoteList.appendChild(li);
-        });
-      });
-  }
+// Fetch and display all quotes when the page loads
+async function fetchQuotes() {
+  const response = await fetch(
+    "https://motivating-quotes-server.onrender.com/quotes"
+  );
+  const quotes = await response.json();
 
-  // Handle form submission to post a new quote
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const user_name = document.getElementById("user_name").value;
-    const quote = document.getElementById("quote").value;
-    const author = document.getElementById("author").value;
+  // Clear current list
+  quoteList.innerHTML = "";
 
-    fetch("https://motivating-quotes-server.onrender.com/quotes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_name, quote, author }),
-    }).then(() => {
-      loadQuotes();
-      form.reset(); // Reset the form
-    });
+  // Add quotes to the list
+  quotes.forEach((quote) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <blockquote>"${quote.quote}" - ${quote.author}</blockquote>
+      <p>Posted by: ${quote.user_name}</p>
+    `;
+    quoteList.appendChild(li);
+  });
+}
+
+// Submit form and post a new quote
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const user_name = document.getElementById("user-name").value;
+  const quote = document.getElementById("quote").value;
+  const author = document.getElementById("author").value;
+
+  // POST new quote to the server
+  await fetch("https://motivating-quotes-server.onrender.com/quotes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ user_name, quote, author }),
   });
 
-  // Handle upvotes
-  quoteList.addEventListener("click", (e) => {
-    if (e.target.classList.contains("upvote-btn")) {
-      const id = e.target.getAttribute("data-id");
-      fetch(
-        `https://motivating-quotes-server.onrender.com/quotes/${id}/upvote`,
-        {
-          method: "POST",
-        }
-      ).then(() => loadQuotes());
-    }
-  });
+  // Clear form fields
+  form.reset();
 
-  // Load quotes on page load
-  loadQuotes();
+  // Fetch updated quotes
+  fetchQuotes();
 });
+
+// Load quotes on page load
+fetchQuotes();
