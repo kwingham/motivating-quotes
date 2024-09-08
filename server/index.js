@@ -22,7 +22,7 @@ app.post("/quotes", async (req, res) => {
 
     // Insert into quotes table
     const newQuote = await db.query(
-      "INSERT INTO quotes (user_name, quote, author) VALUES ($1, $2, $3) RETURNING *",
+      "INSERT INTO quotes (user_name, quote, author, upvotes) VALUES ($1, $2, $3, 0) RETURNING *",
       [user_name, quote, author]
     );
 
@@ -33,13 +33,28 @@ app.post("/quotes", async (req, res) => {
   }
 });
 
-// GET: Retrieve all quotes
+// GET: Retrieve all quotes, with optional filtering and sorting
 app.get("/quotes", async (req, res) => {
   try {
-    const sort = req.query.sort || "desc"; // Default sorting order is descending
-    const allQuotes = await db.query(
-      `SELECT * FROM quotes ORDER BY upvotes ${sort.toUpperCase()}`
-    );
+    const { author, sort } = req.query;
+
+    // Base SQL query
+    let query = "SELECT * FROM quotes";
+    const queryParams = [];
+
+    // Filter by author if provided
+    if (author) {
+      queryParams.push(author);
+      query += ` WHERE author = $${queryParams.length}`;
+    }
+
+    // Sort by upvotes if specified
+    if (sort) {
+      const sortOrder = sort === "ascending" ? "ASC" : "DESC";
+      query += ` ORDER BY upvotes ${sortOrder}`;
+    }
+
+    const allQuotes = await db.query(query, queryParams);
     res.json(allQuotes.rows);
   } catch (error) {
     console.error(error.message);
@@ -47,26 +62,33 @@ app.get("/quotes", async (req, res) => {
   }
 });
 
-// GET: Retrieve all unique authors
+// GET: Retrieve distinct authors
 app.get("/authors", async (req, res) => {
   try {
     const authors = await db.query("SELECT DISTINCT author FROM quotes");
-    res.json(authors.rows);
+    res.json(authors.rows.map((row) => row.author));
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
   }
 });
 
-// GET: Retrieve quotes by author
-app.get("/quotes/author/:author", async (req, res) => {
+// POST: Upvote a quote
+app.post("/quotes/:id/upvote", async (req, res) => {
   try {
-    const { author } = req.params;
-    const quotesByAuthor = await db.query(
-      "SELECT * FROM quotes WHERE author = $1 ORDER BY upvotes DESC",
-      [author]
+    const { id } = req.params;
+
+    // Update the upvotes count for the quote
+    const updatedQuote = await db.query(
+      "UPDATE quotes SET upvotes = upvotes + 1 WHERE id = $1 RETURNING *",
+      [id]
     );
-    res.json(quotesByAuthor.rows);
+
+    if (updatedQuote.rows.length === 0) {
+      return res.status(404).send("Quote not found");
+    }
+
+    res.json(updatedQuote.rows[0]);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
