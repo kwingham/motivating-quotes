@@ -1,100 +1,105 @@
-:root {
-  font-family: "Segoe UI", sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  background-color: #f0f0f0;
-  color: #213547;
-  color-scheme: light dark;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 0 2rem;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f0f0f0;
+  color: #213547;
+}
+
+.container {
+  max-width: 1000px;
+  padding: 20px;
+  text-align: center;
+}
+
+.filter-sort {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-sort select,
+.filter-sort button {
+  padding: 10px;
+  font-size: 1rem;
+  margin-right: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.filter-sort button:hover,
+.filter-sort select:hover {
+  background-color: #eee;
 }
 
 h1 {
-  font-size: 2.5em;
+  font-size: 2.5rem;
   margin-bottom: 20px;
-  text-align: center;
+  flex-grow: 1;
 }
 
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 600px;
   margin-bottom: 30px;
+  width: 100%;
+  max-width: 400px;
   padding: 1rem;
 }
 
-input,
-textarea {
+form input,
+form button {
+  margin-bottom: 10px;
   padding: 10px;
-  margin: 10px 0;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 1em;
+  font-size: 1rem;
   width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+form button {
   background-color: #1a1a1a;
   color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
-  margin-top: 10px;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
-button:hover {
+form button:hover {
+  background-color: #444;
   border-color: #646cff;
 }
 
 ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
-  width: 100%; /* Ensure the ul takes full width */
-  display: flex;
-  flex-direction: column; /* Ensures items stack vertically */
-  align-items: center; /* Center the li elements horizontally */
+  margin: 0;
 }
 
 li {
   background-color: #fff;
   border: 1px solid #ddd;
   padding: 15px;
+  margin-bottom: 10px;
+  text-align: left;
   border-radius: 5px;
-  margin-bottom: 20px;
-  max-width: 600px; /* Max-width for list items */
-  width: 58%; /* Li takes full width of ul */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: left; /* Keep the text left-aligned */
+  max-width: 600px;
+  margin: 0 auto; /* Center the list items */
 }
 
 blockquote {
-  font-size: 1.2em;
+  font-size: 1.2rem;
+  margin: 0;
   font-style: italic;
   color: #333;
-  margin: 0;
 }
 
 p {
@@ -108,7 +113,9 @@ button.upvote-btn {
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  border-radius: 5px;
   margin-top: 5px;
+  transition: background-color 0.3s;
 }
 
 button.upvote-btn:hover {
@@ -123,50 +130,94 @@ button.upvote-btn:disabled {
 /* MEDIA QUERIES for responsiveness */
 @media (max-width: 600px) {
   h1 {
-    font-size: 2em;
+    font-size: 2rem;
+  }
+
+  .filter-sort {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .filter-sort select,
+  .filter-sort button {
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
   }
 
   form {
+    width: 100%;
     max-width: 90%;
+    padding: 0 1.5rem;
   }
 
   li {
-    max-width: 90%;
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
+  blockquote {
+    font-size: 1.1rem;
   }
 }
 
 @media (min-width: 601px) and (max-width: 1024px) {
   h1 {
-    font-size: 2.2em;
+    font-size: 2.2rem;
+  }
+
+  form {
+    width: 100%;
+    max-width: 600px;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
   li {
+    font-size: 1rem;
     max-width: 90%;
+  }
+
+  blockquote {
+    font-size: 1.3rem;
   }
 }
 
 @media (min-width: 1025px) {
+  body {
+    padding: 2rem;
+  }
+
   h1 {
-    font-size: 3em;
+    font-size: 3rem;
+  }
+
+  form {
+    width: 100%;
+    max-width: 600px;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
   li {
-    max-width: 70%;
+    font-size: 1.1rem;
+    padding: 20px;
+    max-width: 80%;
+  }
+
+  blockquote {
+    font-size: 1.4rem;
   }
 }
 
-/* Light mode adjustments */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
 
-  button {
+  form button {
     background-color: #f9f9f9;
-  }
-
-  a:hover {
-    color: #747bff;
   }
 }

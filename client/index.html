@@ -4,34 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Motivating Quotes</title>
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="style.css" />
     <script type="module" src="/app.js" defer></script>
   </head>
   <body>
-    <h1>Post an Inspirational Quote</h1>
-    <!-- Sort button -->
-    <button id="sort-button">Sort: Descending</button>
-    <!-- Author dropdown for filtering quotes by author -->
-    <select id="author-dropdown">
-      <option value="">All Authors</option>
-      <!-- Default option to show all quotes -->
-    </select>
-    <!-- Quote list -->
-    <ul id="quote-list">
-      <!-- Quotes will be dynamically inserted here -->
-    </ul>
-    <form id="quote-form">
-      <input
-        type="text"
-        id="user_name"
-        placeholder="Enter your name"
-        required
-      />
-      <input type="text" id="quote" placeholder="Enter quote" required />
-      <input type="text" id="author" placeholder="Enter author" required />
-      <button type="submit">Post Quote</button>
-    </form>
-    <h2>Inspirational Quotes</h2>
-    <ul id="quote-list"></ul>
+    <div class="container">
+      <!-- Filter and Sort Options -->
+      <div class="filter-sort">
+        <select id="author-filter">
+          <option value="all">Filter by Author</option>
+        </select>
+        <button id="sort-btn" data-sort="asc">Upvotes: Ascending</button>
+      </div>
+      <!-- Header and Form -->
+      <h1>Post an Inspirational Quote</h1>
+      <form id="quote-form">
+        <input
+          type="text"
+          id="user-name"
+          placeholder="Enter your name"
+          required
+        />
+        <input type="text" id="quote" placeholder="Enter quote" required />
+        <input type="text" id="author" placeholder="Enter author" required />
+        <button type="submit">Post Quote</button>
+      </form>
+      <!-- Quotes List -->
+      <h2>Inspirational Quotes</h2>
+      <ul id="quote-list"></ul>
+    </div>
+    <script src="app.js"></script>
   </body>
 </html>
