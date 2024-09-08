@@ -72,7 +72,10 @@ button:hover {
 ul {
   list-style-type: none;
   padding: 0;
-  width: 100%;
+  width: 100%; /* Ensure the ul takes full width */
+  display: flex;
+  flex-direction: column; /* Ensures items stack vertically */
+  align-items: center; /* Center the li elements horizontally */
 }
 
 li {
@@ -81,9 +84,10 @@ li {
   padding: 15px;
   border-radius: 5px;
   margin-bottom: 20px;
-  max-width: 600px;
-  width: 100%;
+  max-width: 600px; /* Max-width for list items */
+  width: 100%; /* Li takes full width of ul */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left; /* Keep the text left-aligned */
 }
 
 blockquote {
