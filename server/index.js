@@ -1,4 +1,3 @@
-// Import necessary modules
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -9,23 +8,25 @@ dotenv.config(); // Load environment variables
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middlewares
-app.use(cors()); // Handle cross-origin requests
-app.use(express.json()); // Parse JSON bodies
+// Enable CORS for the specific client origin
+app.use(
+  cors({
+    origin: "https://motivating-quotes-client.onrender.com",
+  })
+);
 
-// Routes
+app.use(express.json()); // Parse JSON bodies
 
 // POST: Add a new quote
 app.post("/quotes", async (req, res) => {
   try {
     const { user_name, quote, author } = req.body;
 
-    // Insert into quotes table
+    // Insert into quotes table, initialize upvotes to 0
     const newQuote = await db.query(
       "INSERT INTO quotes (user_name, quote, author, upvotes) VALUES ($1, $2, $3, 0) RETURNING *",
       [user_name, quote, author]
     );
-
     res.json(newQuote.rows[0]);
   } catch (error) {
     console.error(error.message);
@@ -33,7 +34,7 @@ app.post("/quotes", async (req, res) => {
   }
 });
 
-// GET: Retrieve all quotes, with optional filtering and sorting
+// GET: Retrieve all quotes, with optional filtering by author and sorting by upvotes
 app.get("/quotes", async (req, res) => {
   try {
     const { author, sort } = req.query;
@@ -43,12 +44,12 @@ app.get("/quotes", async (req, res) => {
     const queryParams = [];
 
     // Filter by author if provided
-    if (author) {
+    if (author && author !== "All Authors") {
       queryParams.push(author);
       query += ` WHERE author = $${queryParams.length}`;
     }
 
-    // Sort by upvotes if specified
+    // Sort by upvotes if specified (ascending or descending)
     if (sort) {
       const sortOrder = sort === "ascending" ? "ASC" : "DESC";
       query += ` ORDER BY upvotes ${sortOrder}`;
@@ -62,7 +63,7 @@ app.get("/quotes", async (req, res) => {
   }
 });
 
-// GET: Retrieve distinct authors
+// GET: Retrieve distinct authors for filtering
 app.get("/authors", async (req, res) => {
   try {
     const authors = await db.query("SELECT DISTINCT author FROM quotes");
