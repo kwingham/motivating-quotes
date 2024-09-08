@@ -3,35 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Motivating Quotes</title>
+    <title>Motivational Quotes</title>
     <link rel="stylesheet" href="style.css" />
-    <script type="module" src="/app.js" defer></script>
+    <script src="app.js" defer></script>
   </head>
   <body>
-    <div class="container">
-      <!-- Filter and Sort Options -->
-      <div class="filter-sort">
-        <select id="author-filter">
-          <option value="all">Filter by Author</option>
-        </select>
-        <button id="sort-btn" data-sort="asc">Upvotes: Ascending</button>
-      </div>
-      <!-- Header and Form -->
+    <header>
       <h1>Post an Inspirational Quote</h1>
-      <form id="quote-form">
-        <input
-          type="text"
-          id="user-name"
-          placeholder="Enter your name"
-          required
-        />
-        <input type="text" id="quote" placeholder="Enter quote" required />
-        <input type="text" id="author" placeholder="Enter author" required />
-        <button type="submit">Post Quote</button>
-      </form>
-      <!-- Quotes List -->
-      <h2>Inspirational Quotes</h2>
-      <ul id="quote-list"></ul>
+    </header>
+
+    <!-- Filter and sorting section -->
+    <div class="filter-sort-container">
+      <select id="author-filter">
+        <option value="All Authors">Filter by Author</option>
+        <!-- Options will be dynamically populated -->
+      </select>
+      <button id="sort-order">Upvotes: Ascending</button>
     </div>
+
+    <!-- Form to post a new quote -->
+    <form id="quote-form">
+      <input
+        type="text"
+        id="user-name"
+        placeholder="Enter your name"
+        required
+      />
+      <textarea id="quote" placeholder="Enter quote" required></textarea>
+      <input type="text" id="author" placeholder="Enter author" required />
+      <button type="submit">Post Quote</button>
+    </form>
+
+    <!-- Section to display quotes -->
+    <section>
+      <h2>Inspirational Quotes</h2>
+      <ul id="quote-list">
+        <!-- Quotes will be dynamically inserted here -->
+      </ul>
+    </section>
   </body>
 </html>
