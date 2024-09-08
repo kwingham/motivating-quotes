@@ -11,35 +11,35 @@
     <header>
       <h1>Post an Inspirational Quote</h1>
     </header>
-
-    <!-- Filter and sorting section -->
-    <div class="filter-sort-container">
-      <select id="author-filter">
-        <option value="All Authors">Filter by Author</option>
-        <!-- Options will be dynamically populated -->
-      </select>
-      <button id="sort-order">Upvotes: Ascending</button>
+    <!-- Centered container -->
+    <div class="container">
+      <!-- Filter and sorting section -->
+      <div class="filter-sort-container">
+        <select id="author-filter">
+          <option value="All Authors">Filter by Author</option>
+          <!-- Options will be dynamically populated -->
+        </select>
+        <button id="sort-order">Upvotes: Ascending</button>
+      </div>
+      <!-- Form to post a new quote -->
+      <form id="quote-form">
+        <input
+          type="text"
+          id="user-name"
+          placeholder="Enter your name"
+          required
+        />
+        <textarea id="quote" placeholder="Enter quote" required></textarea>
+        <input type="text" id="author" placeholder="Enter author" required />
+        <button type="submit">Post Quote</button>
+      </form>
+      <!-- Section to display quotes -->
+      <section>
+        <h2>Inspirational Quotes</h2>
+        <ul id="quote-list">
+          <!-- Quotes will be dynamically inserted here -->
+        </ul>
+      </section>
     </div>
-
-    <!-- Form to post a new quote -->
-    <form id="quote-form">
-      <input
-        type="text"
-        id="user-name"
-        placeholder="Enter your name"
-        required
-      />
-      <textarea id="quote" placeholder="Enter quote" required></textarea>
-      <input type="text" id="author" placeholder="Enter author" required />
-      <button type="submit">Post Quote</button>
-    </form>
-
-    <!-- Section to display quotes -->
-    <section>
-      <h2>Inspirational Quotes</h2>
-      <ul id="quote-list">
-        <!-- Quotes will be dynamically inserted here -->
-      </ul>
-    </section>
   </body>
 </html>

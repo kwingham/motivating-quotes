@@ -1,105 +1,133 @@
+:root {
+  font-family: "Segoe UI", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Prevents the form from going to the middle */
   min-height: 100vh;
-  font-family: "Segoe UI", sans-serif;
-  background-color: #f0f0f0;
-  color: #213547;
+  padding: 2rem;
 }
 
-.container {
-  max-width: 1000px;
-  padding: 20px;
+header {
   text-align: center;
-}
-
-.filter-sort {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.filter-sort select,
-.filter-sort button {
-  padding: 10px;
-  font-size: 1rem;
-  margin-right: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.filter-sort button:hover,
-.filter-sort select:hover {
-  background-color: #eee;
+  margin-bottom: 1rem;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.5em;
   margin-bottom: 20px;
-  flex-grow: 1;
+  color: #213547;
+}
+
+/* Centered container for the entire content */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Filter and sort section */
+.filter-sort-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.filter-sort-container select,
+.filter-sort-container button {
+  padding: 0.6em;
+  font-size: 1em;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
   width: 100%;
   max-width: 400px;
-  padding: 1rem;
+  margin-bottom: 30px;
 }
 
-form input,
-form button {
-  margin-bottom: 10px;
+input,
+textarea {
   padding: 10px;
-  font-size: 1rem;
+  margin: 10px 0;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1em;
   width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
-form button {
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
   background-color: #1a1a1a;
-  color: white;
   cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
+  color: white;
+  margin-top: 10px;
 }
 
-form button:hover {
-  background-color: #444;
+button:hover {
   border-color: #646cff;
 }
 
+section {
+  width: 100%;
+}
+
+h2 {
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #213547;
+}
+
 ul {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
-  margin: 0;
 }
 
 li {
+  margin-bottom: 20px;
   background-color: #fff;
   border: 1px solid #ddd;
   padding: 15px;
-  margin-bottom: 10px;
-  text-align: left;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-width: 600px;
-  margin: 0 auto; /* Center the list items */
+  margin: 0 auto; /* Centers the list items */
 }
 
 blockquote {
-  font-size: 1.2rem;
-  margin: 0;
+  font-size: 1.2em;
   font-style: italic;
   color: #333;
+  margin: 0;
 }
 
 p {
@@ -113,111 +141,26 @@ button.upvote-btn {
   border: none;
   padding: 5px 10px;
   cursor: pointer;
-  border-radius: 5px;
   margin-top: 5px;
-  transition: background-color 0.3s;
 }
 
 button.upvote-btn:hover {
   background-color: #ffae33;
 }
 
-button.upvote-btn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* MEDIA QUERIES for responsiveness */
-@media (max-width: 600px) {
+/* Responsiveness */
+@media (max-width: 768px) {
   h1 {
-    font-size: 2rem;
+    font-size: 2em;
   }
 
-  .filter-sort {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .filter-sort select,
-  .filter-sort button {
-    width: 100%;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
-  form {
-    width: 100%;
-    max-width: 90%;
-    padding: 0 1.5rem;
-  }
-
+  form,
   li {
-    font-size: 0.9rem;
     max-width: 100%;
   }
 
-  blockquote {
-    font-size: 1.1rem;
-  }
-}
-
-@media (min-width: 601px) and (max-width: 1024px) {
-  h1 {
-    font-size: 2.2rem;
-  }
-
-  form {
-    width: 100%;
-    max-width: 600px;
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-
-  li {
-    font-size: 1rem;
-    max-width: 90%;
-  }
-
-  blockquote {
-    font-size: 1.3rem;
-  }
-}
-
-@media (min-width: 1025px) {
-  body {
-    padding: 2rem;
-  }
-
-  h1 {
-    font-size: 3rem;
-  }
-
-  form {
-    width: 100%;
-    max-width: 600px;
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-
-  li {
-    font-size: 1.1rem;
-    padding: 20px;
-    max-width: 80%;
-  }
-
-  blockquote {
-    font-size: 1.4rem;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  form button {
-    background-color: #f9f9f9;
+  .filter-sort-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
