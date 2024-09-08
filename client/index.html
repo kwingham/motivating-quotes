@@ -8,19 +8,11 @@
     <script type="module" src="/app.js" defer></script>
   </head>
   <body>
-    <header>
-      <h1>Post an Inspirational Quote</h1>
-    </header>
-    <!-- Centered container -->
     <div class="container">
-      <!-- Filter and sorting section -->
-      <div class="filter-sort-container">
-        <select id="author-filter">
-          <option value="All Authors">Filter by Author</option>
-          <!-- Options will be dynamically populated -->
-        </select>
-        <button id="sort-order">Upvotes: Ascending</button>
-      </div>
+      <!-- Form header -->
+      <header>
+        <h1>Post an Inspirational Quote</h1>
+      </header>
       <!-- Form to post a new quote -->
       <form id="quote-form">
         <input
@@ -33,6 +25,14 @@
         <input type="text" id="author" placeholder="Enter author" required />
         <button type="submit">Post Quote</button>
       </form>
+      <!-- Filter and sorting buttons after form -->
+      <div class="filter-sort">
+        <select id="author-filter">
+          <option value="All Authors">Filter by Author</option>
+          <!-- Options will be dynamically populated -->
+        </select>
+        <button id="sort-order">Upvotes: Ascending</button>
+      </div>
       <!-- Section to display quotes -->
       <section>
         <h2>Inspirational Quotes</h2>
