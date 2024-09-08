@@ -85,7 +85,7 @@ li {
   border-radius: 5px;
   margin-bottom: 20px;
   max-width: 600px; /* Max-width for list items */
-  width: 100%; /* Li takes full width of ul */
+  width: 58%; /* Li takes full width of ul */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: left; /* Keep the text left-aligned */
 }
