@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Motivating Quotes</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js" defer></script>
+  </head>
+  <body>
+    <h1>Post an Inspirational Quote</h1>
+    <form id="quote-form">
+      <input
+        type="text"
+        id="user_name"
+        placeholder="Enter your name"
+        required
+      />
+      <input type="text" id="quote" placeholder="Enter quote" required />
+      <input type="text" id="author" placeholder="Enter author" required />
+      <button type="submit">Post Quote</button>
+    </form>
+    <h2>Inspirational Quotes</h2>
+    <ul id="quote-list"></ul>
+  </body>
+</html>
