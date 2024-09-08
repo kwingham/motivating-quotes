@@ -33,19 +33,40 @@ app.post("/quotes", async (req, res) => {
   }
 });
 
-// GET: Retrieve all quotes with optional sorting by upvotes
+// GET: Retrieve all quotes
 app.get("/quotes", async (req, res) => {
   try {
-    // Retrieve the sort query parameter (optional, defaults to 'desc')
-    const sort = req.query.sort || "desc";
-    const order = sort === "asc" ? "ASC" : "DESC";
-
-    // Query to fetch quotes sorted by upvotes
+    const sort = req.query.sort || "desc"; // Default sorting order is descending
     const allQuotes = await db.query(
-      `SELECT * FROM quotes ORDER BY upvotes ${order}`
+      `SELECT * FROM quotes ORDER BY upvotes ${sort.toUpperCase()}`
     );
-
     res.json(allQuotes.rows);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// GET: Retrieve all unique authors
+app.get("/authors", async (req, res) => {
+  try {
+    const authors = await db.query("SELECT DISTINCT author FROM quotes");
+    res.json(authors.rows);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// GET: Retrieve quotes by author
+app.get("/quotes/author/:author", async (req, res) => {
+  try {
+    const { author } = req.params;
+    const quotesByAuthor = await db.query(
+      "SELECT * FROM quotes WHERE author = $1 ORDER BY upvotes DESC",
+      [author]
+    );
+    res.json(quotesByAuthor.rows);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
